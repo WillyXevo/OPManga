@@ -680,7 +680,7 @@ class simple_html_dom_node
 // This implies that an html attribute specifier may start with an @ sign that is NOT captured by the expression.
 // farther study is required to determine of this should be documented or removed.
 //        $pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
-        $pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-:]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
+        $pattern = "/([-:\w\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[-:\w]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
         preg_match_all($pattern, trim($selector_string).' ', $matches, PREG_SET_ORDER);
         if (is_object($debugObject)) {$debugObject->debugLog(2, "Matches Array: ", $matches);}
 
@@ -1232,8 +1232,8 @@ class simple_html_dom
         {
             // Have php try to detect the encoding from the text given to us.
             //$charset = mb_detect_encoding($this->root->plaintext . "ascii", $encoding_list = array( "UTF-8", "CP1252" ) );
-            $charset = false;//mb_detect_encoding($this->root->plaintext . "ascii", $encoding_list = array( "UTF-8", "CP1252" ) );
-            if (is_object($debugObject)) {$debugObject->debugLog(2, 'mb_detect found: ' . $charset);}
+             $charset = false;
+		if (is_object($debugObject)) {$debugObject->debugLog(2, 'mb_detect found: ' . $charset);}
 
             // and if this doesn't work...  then we need to just wrongheadedly assume it's UTF-8 so that we can move on - cause this will usually give us most of what we need...
             if ($charset === false)
@@ -1362,8 +1362,8 @@ class simple_html_dom
             return true;
         }
 
-        if (!preg_match("/^[\w-:]+$/", $tag)) {
-            $node->_[HDOM_INFO_TEXT] = '<' . $tag . $this->copy_until('<>');
+        if (!preg_match("/^[-:\w]+$/", $tag, $res)) {
+            $node->_[HDOM_INFO_TEXT] = '<' . $res . $this->copy_until('<>');
             if ($this->char==='<') {
                 $this->link_nodes($node, false);
                 return true;

@@ -31,11 +31,11 @@
 		$data = curl_exec($ch);
 		$info = curl_getinfo($ch);
 		$error = curl_error($ch);
-
+/*
 		echo "<pre>";
 		print_r($info);
 		print_r($error);
-		echo "</pre>";
+		echo "</pre>";*/
 
 		curl_close($ch);
 
