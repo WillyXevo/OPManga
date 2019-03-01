@@ -1,0 +1,54 @@
+@font-face {
+    font-family: opfont;
+    src: url(../fonts/one_piece_font.ttf);
+}
+
+body{
+	background: #F0F0F3;
+}
+
+.header-main{
+	
+}
+
+.header-main>h1{
+	font-family: opfont;
+	font-size: 5em;
+	-webkit-text-stroke: 0.5px #3C9CCD;
+	color: #000;
+}
+
+.color-yellow{
+}
+
+.navbar-main{
+	border-radius: 0;
+}
+
+.navbar-inverse 
+.navbar-nav>.active>a, 
+.navbar-inverse 
+.navbar-nav>.active>a:focus, 
+.navbar-inverse 
+.navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #3C9CCD;
+}
+
+
+.body-main>h2{
+	border-bottom: 2px solid #3C9CCD;
+}
+
+.table-list{
+
+}
+.table-list>tbody>tr>td, 
+.table-list>tbody>tr>th, 
+.table-list>tfoot>tr>td, 
+.table-list>tfoot>tr>th, 
+.table-list>thead>tr>td, 
+.table-list>thead>tr>th {
+    border-top: none;
+    border-bottom: 1px solid #DDD;
+}
