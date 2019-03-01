@@ -32,6 +32,11 @@
 		$info = curl_getinfo($ch);
 		$error = curl_error($ch);
 
+		echo "<pre>";
+		print_r($info);
+		print_r($error);
+		echo "</pre>";
+
 		curl_close($ch);
 
 		$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
