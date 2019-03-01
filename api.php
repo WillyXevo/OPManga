@@ -56,6 +56,7 @@
 					$a = "http://www.mangacanblog.com/baca-komik-one_piece-$txt-$nt-bahasa-indonesia-one_piece-$txt-terbaru.html";
 					$tmp["link"] = $a;
 					$tmp["judul"] = trim($td->plaintext);
+					$tmp['id'] = md5(trim($td->plaintext));//date("YmdHis", strtotime(explode(", ", $td->plaintext)[1]));
 				}
 				if($i==3){
 					$tmp['date'] = $td->plaintext;
