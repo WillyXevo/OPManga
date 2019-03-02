@@ -35,12 +35,16 @@
 					$txt = $sp[5];
 					$nt = $txt+1;
 					$a = "http://www.mangacanblog.com/baca-komik-one_piece-$txt-$nt-bahasa-indonesia-one_piece-$txt-terbaru.html";
+					$tmp['id'] = md5(trim($td->plaintext));//date("YmdHis", strtotime(explode(", ", $td->plaintext)[1]));
 					$tmp["link"] = $a;
 					$tmp["judul"] = trim($td->plaintext);
-					$tmp['id'] = md5(trim($td->plaintext));//date("YmdHis", strtotime(explode(", ", $td->plaintext)[1]));
 				}
 				if($i==3){
 					$tmp['date'] = $td->plaintext;
+					$date = $td->plaintext;
+					$date = explode(" ", $date);
+					$srt = str_replace(",", "", $date[0])." ".$date[1]." ".$date[2];
+					$tmp['date_act'] = date("Y-m-d", strtotime($srt));
 				}
 				$i++;
 			}
