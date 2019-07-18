@@ -3,11 +3,12 @@
 	$link = $_GET['link'];
 
 	$list_manga = _filter_(ini($link));
+	//$list_manga = ini($link);
 
-function _filter_($arr){
+	function _filter_($arr){
 		$ret = [];
 		foreach ($arr as $k => $v) {
-			if(strpos($v, 'lowongan') || strpos($v, 'iklan')){
+			if(strpos($v, 'lowongan') || strpos($v, 'iklan') || strpos($v, 'OneMangaDay')){
 				//echo "$v <br>";
 			}else{
 				array_push($ret, $v);
@@ -34,7 +35,9 @@ function ini($url='')
 	curl_close($ch);
 	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
 
-	$html = file_get_html($url);
+	//$html = file_get_html($url);
+
+	$html = $dom->load($data, true, true);
 	$list_manga = array();
 	$jd = "";
 	foreach($html->find('div#imgholder') as $ell){
