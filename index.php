@@ -2,9 +2,32 @@
 <?php
 
 require('simplehtmldom/simple_html_dom.php');
+require('func.php');
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: x-access-header, Authorization, Origin, X-Requested-With, Content-Type, Accept");
+
+$title = 'OPManga - Read one piece manga online.'; 
+$og_desc = 'Read one piece manga online.'; 
+$og_img = 'opmanga.herokuapp.com/assets/img/icons.png'; 
+$og_url = "";
+if(isset($_GET['p'])){
+	$p = $_GET['p'];
+	$og_url = "?p=$p";
+	if(isset($_GET['judul']) &&  isset($_GET['link'])){
+		$judul = $_GET['judul'];
+		$link = $_GET['link'];
+
+		$judul = $_GET['judul'];
+		$link = $_GET['link'];
+
+		$list_manga = _filter_(list_manga($link));
+		$og_url .= "&judul=$judul&link=$link";
+		$title = 'OPManga - '.$judul; 
+		$og_desc = 'Read one piece manga online. '.$judul; 
+		$og_img = $list_manga[0]; 
+	}
+}
 
 ?>
 <!DOCTYPE html>
@@ -13,9 +36,15 @@ header("Access-Control-Allow-Headers: x-access-header, Authorization, Origin, X-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>OPMANGA</title>
+    <meta property="og:url"           content="opmanga.herokuapp.com/index.php<?= $og_url; ?>" />
+  	<meta property="og:type"          content="website" />
+  	<meta property="og:title"         content="<?= $title; ?>" />
+  	<meta property="og:description"   content="<?= $og_desc; ?>" />
+  	<meta property="og:image"         content="<?= $og_img; ?>" />
+	<title><?= $title; ?></title>
 	<link rel="shortcut icon" href="assets/img/icons.png" type="image/x-icon"/>
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/font-awesome.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	
 </head>
@@ -58,6 +87,37 @@ header("Access-Control-Allow-Headers: x-access-header, Authorization, Origin, X-
 			include "home.php";
 		}
 	?>
+	</div>
+	<div class="footer">
+		<div class="container">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-6">
+						<h1><span class="color-yellow">O</span>PMANGA</h1>
+
+						<p>Powered by <a href="http://heroku.com/" target="blank">heroku</a></p>
+					</div>
+					<div class="col-xs-6 social-btn">				
+						<a href="javascript:void(0)" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=opmanga.herokuapp.com/index.php<?= $og_url; ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Facebook">
+							<div class="btn-social">
+								<i class="fa fa-facebook"></i>
+							</div>
+						</a>
+						<a href="javascript:void(0)" onclick="window.open('https://twitter.com/share?url=opmanga.herokuapp.com/index.php<?= $og_url; ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Twitter">
+							<div class="btn-social">
+								<i class="fa fa-twitter"></i>
+							</div>
+						</a>
+						<a href="https://github.com/WillyXevo/OPManga" target="blank" title="Github">
+							<div class="btn-social">
+								<i class="fa fa-github"></i>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+		</div>
 	</div>
     <script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>

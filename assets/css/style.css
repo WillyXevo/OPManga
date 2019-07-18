@@ -52,3 +52,41 @@ body{
     border-top: none;
     border-bottom: 1px solid #DDD;
 }
+
+.footer{
+	background: #222222;
+	height: 150px;
+	margin-top: 50px;
+}
+
+.footer h1{
+	font-family: opfont;
+	font-size: 5em;
+	color: #3C9CCD;
+	border-bottom: 1px solid #FFF;
+}
+.footer p{
+	color: #Fff;
+	margin: 0;
+}
+.social-btn{
+	padding: 50px;
+}
+
+.btn-social{
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+	text-align: center;
+	border: 2px solid #fff;
+	border-radius: 10px;
+	padding: 4px;
+	color: #FFF;
+	font-size: 1.6em;
+}
+
+.social-btn>a:hover .btn-social{
+	color: #3C9CCD;
+	border: 2px solid #3C9CCD;
+}
