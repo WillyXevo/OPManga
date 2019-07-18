@@ -42,7 +42,7 @@ echo '</pre>';*/
 				$v = $list_manga[$i];
 		?>
 		<tr>
-			<td><a href="index.php?p=view&judul=<?= $v['judul']?>&link=<?= $v['link']?>"><?= $v['judul']?></a></td>
+			<td><a href="index.php?page=view&judul=<?= $v['judul']?>&link=<?= $v['link']?>"><?= $v['judul']?></a></td>
 			<td><?= $v['date']?></td>
 		</tr>
 		<?php
@@ -55,34 +55,34 @@ echo '</pre>';*/
 <nav>
   	<ul class="pagination">
 	    <li>
-	      	<a href="index.php?p=home&hal=1" aria-label="Previous">
+	      	<a href="index.php?page=home&hal=1" aria-label="Previous">
 	        	<span aria-hidden="true">&laquo;</span>
 	      	</a>
 	    </li>
 	    <?php
 	    	$link_pagination = "";
 	    	if($fr>1){
-    			$link_pagination.= '<li><a href="index.php?p=home&hal=1">1</a></li>';
+    			$link_pagination.= '<li><a href="index.php?page=home&hal=1">1</a></li>';
     			$link_pagination.= '<li class="disabled"><a href="#">...</a></li>';
     		}
 	    	
     		for($i = $fr; $i <= $ls; $i++){
 	    		
 	    		if($curr_page==$i){
-    				$link_pagination.= "<li class='active'><a href='index.php?p=home&hal=$i'>$i</a></li>";
+    				$link_pagination.= "<li class='active'><a href='index.php?page=home&hal=$i'>$i</a></li>";
 	    		}else{
-    				$link_pagination.= "<li><a href='index.php?p=home&hal=$i'>$i</a></li>";
+    				$link_pagination.= "<li><a href='index.php?page=home&hal=$i'>$i</a></li>";
 	    		}
 	    		
 	    	}
 	    	if($ls<$page_count){
     			$link_pagination.= "<li class='disabled'><a href='#'>...</a></li>";
-	    		$link_pagination.= "<li><a href='index.php?p=home&hal=$page_count'>$page_count</a></li>";
+	    		$link_pagination.= "<li><a href='index.php?page=home&hal=$page_count'>$page_count</a></li>";
     		}
 	    	echo $link_pagination;
 	    ?>	    
 	    <li>
-	      	<a href="index.php?p=home&hal=<?= $page_count; ?>" aria-label="Next">
+	      	<a href="index.php?page=home&hal=<?= $page_count; ?>" aria-label="Next">
 	        	<span aria-hidden="true">&raquo;</span>
 	      	</a>
 	    </li>
