@@ -15,16 +15,16 @@ if(isset($_GET['page'])){
 	$p = $_GET['page'];
 	$og_url = "?page=$p";
 	if(isset($_GET['judul']) &&  isset($_GET['link'])){
-		$judul = $_GET['judul'];
-		$link = $_GET['link'];
+		$judul = d_url($_GET['judul']);
+		$link = d_url($_GET['link']);
 
-		$judul = $_GET['judul'];
-		$link = $_GET['link'];
+		$judul = trim($judul);
+		//$link = $_GET['link'];
 
 		$list_manga = _filter_(list_manga($link));
 		$_judul = urlencode($judul);
 		$_link = urlencode($link);
-		$og_url .= "&judul=$judul&link=$link";
+		$og_url .= "&judul=".e_url($judul)."&link=".e_url($link);
 		$title = 'OPManga - '.$judul; 
 		$og_desc = 'Read one piece manga online. '.$judul; 
 		$og_img = $list_manga[0]; 
@@ -38,6 +38,12 @@ if(isset($_GET['page'])){
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#3C9CCD">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#3C9CCD">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#3C9CCD">
     <meta property="og:url"           content="opmanga.herokuapp.com/index.php<?= $og_url; ?>" />
   	<meta property="og:type"          content="website" />
   	<meta property="og:title"         content="<?= $title; ?>" />
