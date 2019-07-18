@@ -10,10 +10,10 @@ header("Access-Control-Allow-Headers: x-access-header, Authorization, Origin, X-
 $title = 'OPManga - Read one piece manga online.'; 
 $og_desc = 'Read one piece manga online.'; 
 $og_img = 'opmanga.herokuapp.com/assets/img/icons.png'; 
-$og_url = "";
+$og_url = "https://opmanga.herokuapp.com/index.php";
 if(isset($_GET['page'])){
 	$p = $_GET['page'];
-	$og_url = "?page=$p";
+	$og_url .= "?page=$p";
 	if(isset($_GET['judul']) &&  isset($_GET['link'])){
 		$judul = d_url($_GET['judul']);
 		$link = d_url($_GET['link']);
@@ -44,7 +44,7 @@ if(isset($_GET['page'])){
 	<meta name="msapplication-navbutton-color" content="#3C9CCD">
 	<!-- iOS Safari -->
 	<meta name="apple-mobile-web-app-status-bar-style" content="#3C9CCD">
-    <meta property="og:url"           content="opmanga.herokuapp.com/index.php<?= $og_url; ?>" />
+    <meta property="og:url"           content="<?= $og_url; ?>" />
   	<meta property="og:type"          content="website" />
   	<meta property="og:title"         content="<?= $title; ?>" />
   	<meta property="og:description"   content="<?= $og_desc; ?>" />
@@ -84,6 +84,7 @@ if(isset($_GET['page'])){
 	</nav>
 	<div class="container body-main">
 	<?php
+
 		$file = scandir(".");
 		unset($file[0], $file[1]);
 		if(isset($_GET['page'])){
@@ -106,12 +107,12 @@ if(isset($_GET['page'])){
 						<p>Powered by <a href="http://heroku.com/" target="blank">heroku</a></p>
 					</div>
 					<div class="col-xs-6 social-btn">				
-						<a href="javascript:void(0)" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=opmanga.herokuapp.com/index.php<?= $og_url; ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Facebook">
+						<a href="javascript:void(0)" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($og_url); ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Facebook">
 							<div class="btn-social">
 								<i class="fa fa-facebook"></i>
 							</div>
 						</a>
-						<a href="javascript:void(0)" onclick="window.open('https://twitter.com/share?url=https://opmanga.herokuapp.com/index.php<?= $og_url; ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Twitter">
+						<a href="javascript:void(0)" onclick="window.open('https://twitter.com/share?url=<?= urlencode($og_url); ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Twitter">
 							<div class="btn-social">
 								<i class="fa fa-twitter"></i>
 							</div>
