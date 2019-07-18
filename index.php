@@ -22,7 +22,9 @@ if(isset($_GET['p'])){
 		$link = $_GET['link'];
 
 		$list_manga = _filter_(list_manga($link));
-		$og_url .= "&judul=$judul&link=$link";
+		$_judul = urlencode($judul);
+		$_link = urlencode($link);
+		$og_url .= "&judul=$_judul&link=$_link";
 		$title = 'OPManga - '.$judul; 
 		$og_desc = 'Read one piece manga online. '.$judul; 
 		$og_img = $list_manga[0]; 
