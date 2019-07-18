@@ -11,8 +11,8 @@ $title = 'OPManga - Read one piece manga online.';
 $og_desc = 'Read one piece manga online.'; 
 $og_img = 'opmanga.herokuapp.com/assets/img/icons.png'; 
 $og_url = "";
-if(isset($_GET['p'])){
-	$p = $_GET['p'];
+if(isset($_GET['page'])){
+	$p = $_GET['page'];
 	$og_url = "?p=$p";
 	if(isset($_GET['judul']) &&  isset($_GET['link'])){
 		$judul = $_GET['judul'];
@@ -24,7 +24,7 @@ if(isset($_GET['p'])){
 		$list_manga = _filter_(list_manga($link));
 		$_judul = urlencode($judul);
 		$_link = urlencode($link);
-		$og_url .= "&judul=$_judul&link=$_link";
+		$og_url .= "&judul=$judul&link=$link";
 		$title = 'OPManga - '.$judul; 
 		$og_desc = 'Read one piece manga online. '.$judul; 
 		$og_img = $list_manga[0]; 
@@ -80,8 +80,8 @@ if(isset($_GET['p'])){
 	<?php
 		$file = scandir(".");
 		unset($file[0], $file[1]);
-		if(isset($_GET['p'])){
-			$p = $_GET['p'].".php";
+		if(isset($_GET['page'])){
+			$p = $_GET['page'].".php";
 			if(in_array($p, $file)){
 				include $p;
 			}
@@ -105,7 +105,7 @@ if(isset($_GET['p'])){
 								<i class="fa fa-facebook"></i>
 							</div>
 						</a>
-						<a href="javascript:void(0)" onclick="window.open('https://twitter.com/share?url=opmanga.herokuapp.com/index.php<?= $og_url; ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Twitter">
+						<a href="javascript:void(0)" onclick="window.open('https://twitter.com/share?url=https://opmanga.herokuapp.com/index.php<?= $og_url; ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Twitter">
 							<div class="btn-social">
 								<i class="fa fa-twitter"></i>
 							</div>
