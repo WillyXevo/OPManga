@@ -13,7 +13,7 @@ $og_img = 'opmanga.herokuapp.com/assets/img/icons.png';
 $og_url = "";
 if(isset($_GET['page'])){
 	$p = $_GET['page'];
-	$og_url = "?p=$p";
+	$og_url = "?page=$p";
 	if(isset($_GET['judul']) &&  isset($_GET['link'])){
 		$judul = $_GET['judul'];
 		$link = $_GET['link'];
