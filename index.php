@@ -21,7 +21,7 @@ if(isset($_GET['page'])){
 		$judul = trim($judul);
 		//$link = $_GET['link'];
 
-		$list_manga = _filter_(list_manga($link));
+		$list_manga = list_manga($link);
 		$_judul = urlencode($judul);
 		$_link = urlencode($link);
 		$og_url .= "&judul=".e_url($judul)."&link=".e_url($link);
