@@ -1,5 +1,6 @@
 <?php
 
+require('simplehtmldom/simple_html_dom.php');
 /*
 function list_chapter($url='')
 {
@@ -70,6 +71,14 @@ function _filter2($arr){
 			array_push($ret, $v);
 		}
 	}
+	if(sizeof($ret)==0){
+		foreach ($arr as $k => $v) {
+			if(strpos($v, 'creadit') || strpos($v, 'komen') || strpos($v, 'manga.png')){
+			}else{
+				array_push($ret, $v);
+			}
+		}	
+	}
 	//print_r($ret) ;
 	return $ret;
 }
@@ -130,7 +139,6 @@ function list_manga($url='')
 	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
 
 	//$html = file_get_html($url);
-
 	$html = $dom->load($data, true, true);
 	$list_manga = array();
 	$jd = "";
@@ -145,6 +153,7 @@ function list_manga($url='')
 		}
 	}
 	$fil =  _filter2($list_manga);
+	//print_r($fil);
 	$list_manga2 = array();
 	foreach ($fil as $k => $v) {
 		array_push($list_manga2, base64_encode(file_get_contents($v)));
@@ -152,7 +161,8 @@ function list_manga($url='')
 	return $list_manga2;
 }
 /*
-$lm = coba('https://mangaku.in/one-piece-chapter-952/');
+$lm = list_manga('https://mangaku.in/one-piece-chapter-954-seperti-memberikan-sayap-pada-naga/');
+
 echo '<pre>';
 print_r($lm);
 echo '</pre>';*/

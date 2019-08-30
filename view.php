@@ -22,7 +22,8 @@
 	</center>
 </div>
 <br>
-<a href="index.php"><h4>&#60;&#60; Kembali</h4></a>
+<a href="index.php"><h4 class="link_back">&#60;&#60; Kembali</h4></a>
+
 
 <!-- 
 -->

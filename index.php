@@ -1,7 +1,6 @@
 
 <?php
 
-require('simplehtmldom/simple_html_dom.php');
 require('func.php');
 
 header("Access-Control-Allow-Origin: *");
@@ -20,7 +19,6 @@ if(isset($_GET['page'])){
 
 		$judul = trim($judul);
 		//$link = $_GET['link'];
-
 		$list_manga = list_manga($link);
 		$_judul = urlencode($judul);
 		$_link = urlencode($link);
@@ -101,9 +99,8 @@ if(isset($_GET['page'])){
 		<div class="container">
 			<div class="container">
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-xs-6 footer-left">
 						<h1><span class="color-yellow">O</span>PMANGA</h1>
-
 						<p>Powered by <a href="http://heroku.com/" target="blank">heroku</a></p>
 					</div>
 					<div class="col-xs-6 social-btn">				
