@@ -206,4 +206,195 @@ function list_chapter($url){
 	return $list_manga;
 }
 
+
+function list_chapter_page($url){
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$error = curl_error($ch);
+
+	curl_close($ch);
+
+	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+	$html = $dom->load($data, true, true);
+
+	$list_manga = array();
+	foreach ($html->find("div>small") as $div) {
+		$i = 0;
+		foreach ($div->find('a') as $a) {
+			$list_manga[$i] = array('judul' => $a->plaintext,
+									'link' => $a->href
+									);
+			if($i==10){
+				return $list_manga;
+			}
+
+			$i++;
+		}
+	}
+	
+}
+
+function list_episode($url){
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$error = curl_error($ch);
+
+	curl_close($ch);
+	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+	//$html = file_get_html($url);
+	$html = $dom->load($data, true, true);
+	$list_episode = array();
+
+	foreach ($html->find(".episodelist") as $div) {
+		foreach ($div->find("li") as $li) {
+			$eps = $li->find(".leftoff",0);
+			$judul = $li->find(".lefttitle",0);
+			$dt = $li->find(".rightoff",0);
+			array_push($list_episode, array(
+											'link'	=> $eps->find("a",0)->href,
+											'eps'	=> $eps->plaintext,
+											'judul'	=> $judul->plaintext,
+											'date'	=> $dt->plaintext
+											));
+		}
+	}
+	return $list_episode;
+}
+
+
+function list_episode_page($url){
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$error = curl_error($ch);
+
+	curl_close($ch);
+	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+	//$html = file_get_html($url);
+	$html = $dom->load($data, true, true);
+	$list_episode = array();
+
+	foreach ($html->find(".episodelist") as $div) {
+		$i=0;
+		foreach ($div->find("li") as $li) {
+			$eps = $li->find(".leftoff",0);
+			$judul = $li->find(".lefttitle",0);
+			$dt = $li->find(".rightoff",0);
+			array_push($list_episode, array(
+											'link'	=> $eps->find("a",0)->href,
+											'eps'	=> $eps->plaintext,
+											'judul'	=> $judul->plaintext,
+											'date'	=> $dt->plaintext
+											));
+			if($i==10){
+				return $list_episode;
+			}
+			$i++;
+		}
+	}
+}
+
+
+function list_anime($url){
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$error = curl_error($ch);
+
+	curl_close($ch);
+	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+	//$html = file_get_html($url);
+	$html = $dom->load($data, true, true);
+	$list_anime = array();
+	foreach ($html->find('.idframe') as $vid) {
+		$list_anime['video'] = $vid->attr["src"];
+	}
+	
+	foreach ($html->find('.epsc') as $epsc) {
+		$mkv_text = $epsc->find('h2',0)->plaintext;
+		$mp4_text = $epsc->find('h2',1)->plaintext;
+		
+		$mkv_array = array();
+		$mp4_array = array();
+
+		$mkv_box = $epsc->find('.op-download',0);
+		$mp4_box = $epsc->find('.op-download',1);
+		
+		$i = 0;
+		foreach ($mkv_box->find(".title-download") as $td) {
+			$mkv_array[$i]['text'] = $td->plaintext;
+			$i++;
+		}
+		$i = 0;
+		foreach ($mkv_box->find(".list-download") as $ld) {
+			$j=0;
+			foreach ($ld->find('strong') as $strong) {
+				foreach ($strong->find('a') as $link) {
+					$mkv_array[$i]['server'][$j] = array('text' => $link->plaintext, 'link' => $link->href); 
+					$j++;
+				}
+			}
+			$i++;
+		}
+		$i = 0;
+		foreach ($mp4_box->find(".title-download") as $td) {
+			$mp4_array[$i]['text'] = $td->plaintext;
+			$i++;
+		}
+		$i = 0;
+		foreach ($mp4_box->find(".list-download") as $ld) {
+			$j=0;
+			foreach ($ld->find('strong') as $strong) {
+				foreach ($strong->find('a') as $link) {
+					$mp4_array[$i]['server'][$j] = array('text' => $link->plaintext, 'link' => $link->href);
+					$j++;
+				}
+			}
+			$i++;
+		}
+
+		$list_anime['download'] = array(
+										'mkv' => array('text' => $mkv_text, 'quality' => $mkv_array),
+										'mp4' => array('text' => $mp4_text, 'quality' => $mp4_array),
+		);
+	}
+	return $list_anime;
+
+}
+
+/*$anime = list_anime("https://www.oploverz.in/one-piece-episode-902-subtitle-indonesia/");
+echo '<pre>';
+print_r($anime);
+echo '</pre>';*/
+
 ?>

@@ -12,21 +12,40 @@ $og_img = 'opmanga.herokuapp.com/assets/img/icons.png';
 $og_url = "https://opmanga.herokuapp.com/index.php";
 if(isset($_GET['page'])){
 	$p = $_GET['page'];
-	$og_url .= "?page=$p";
-	if(isset($_GET['judul']) &&  isset($_GET['link'])){
-		$judul = d_url($_GET['judul']);
-		$link = d_url($_GET['link']);
+	if($p == 'view'){
+		$og_url .= "?page=$p";
+		if(isset($_GET['judul']) &&  isset($_GET['link'])){
+			$judul = d_url($_GET['judul']);
+			$link = d_url($_GET['link']);
 
-		$judul = trim($judul);
-		//$link = $_GET['link'];
-		$list_manga = list_manga($link);
-		$_judul = urlencode($judul);
-		$_link = urlencode($link);
-		$og_url .= "&judul=".e_url($judul)."&link=".e_url($link);
-		$title = 'OPManga - '.$judul; 
-		$og_desc = 'Read one piece manga online. '.$judul; 
-		$og_img = $list_manga[0]; 
+			$judul = trim($judul);
+			//$link = $_GET['link'];
+			$list_manga = list_manga($link);
+			$_judul = urlencode($judul);
+			$_link = urlencode($link);
+			$og_url .= "&judul=".e_url($judul)."&link=".e_url($link);
+			$title = 'OPManga - '.$judul; 
+			$og_desc = 'Read one piece manga online. '.$judul; 
+			$og_img = $list_manga[0]; 
+		}
+	}else{
+		$og_url .= "?page=$p";
+		if(isset($_GET['judul']) &&  isset($_GET['link'])){
+			$judul = d_url($_GET['judul']);
+			$link = d_url($_GET['link']);
+
+			$judul = trim($judul);
+			$list_anime = list_anime($link);
+			$_judul = urlencode($judul);
+			$_link = urlencode($link);
+			$og_url .= "&judul=".e_url($judul)."&link=".e_url($link);
+			$title = 'OPManga - Stream One Piece | '.$judul; 
+			$og_desc = 'Read one piece manga online. '.$judul; 
+			$og_img = "https://www.oploverz.in/wp-content/uploads/2015/09/Screenshot_1.jpg";
+		}
 	}
+
+	
 }
 
 ?>
@@ -53,6 +72,7 @@ if(isset($_GET['page'])){
 	<link rel="stylesheet" href="assets/css/font-awesome.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	
+    <script src="assets/js/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container header-main">
@@ -74,7 +94,9 @@ if(isset($_GET['page'])){
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      	<div class="container">
 			      	<ul class="nav navbar-nav">
-				        <li class="active"><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
+				        <li id="link-menu-home"><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
+				        <li id="link-menu-manga"><a href="index.php?page=manga">Manga <span class="sr-only">(current)</span></a></li>
+				        <li id="link-menu-anime"><a href="index.php?page=anime">Anime <span class="sr-only">(current)</span></a></li>
 			      	</ul>
 		      	</div>
 	    	</div><!-- /.navbar-collapse -->
@@ -86,12 +108,15 @@ if(isset($_GET['page'])){
 		$file = scandir(".");
 		unset($file[0], $file[1]);
 		if(isset($_GET['page'])){
-			$p = $_GET['page'].".php";
+			$q = $_GET['page'];
+			$p = $q.".php";
 			if(in_array($p, $file)){
 				include $p;
+				link_active($q);
 			}
 		}else{
 			include "home.php";
+			link_active('home');
 		}
 	?>
 	</div>
@@ -103,7 +128,7 @@ if(isset($_GET['page'])){
 						<h1><span class="color-yellow">O</span>PMANGA</h1>
 						<p>Powered by <a href="http://heroku.com/" target="blank">heroku</a></p>
 					</div>
-					<div class="col-xs-6 social-btn">				
+					<div class="col-xs-6 social-btn text-right">				
 						<a href="javascript:void(0)" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($og_url); ?>', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes')" title="Facebook">
 							<div class="btn-social">
 								<i class="fa fa-facebook"></i>
@@ -125,7 +150,20 @@ if(isset($_GET['page'])){
 			</div>
 		</div>
 	</div>
-    <script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
+	<?php
+		function link_active($lk){
+			if($lk =='view'){
+				$lk = 'manga';
+			}else if($lk == 'view_anime'){
+				$lk = 'anime';
+			}
+			echo '<script type="text/javascript">';
+			echo '$(document).ready(function(){';
+			echo '$("#link-menu-'.$lk.'").addClass("active");';
+			echo '});';
+			echo '</script>';
+		}
+	?>
 </body>
 </html>
