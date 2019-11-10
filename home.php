@@ -8,6 +8,13 @@ $list_episode = list_episode_page("https://www.oploverz.in/series/one-piece/");
 <table class="table table-list">
 	<tbody>
 		<?php
+		if(sizeof($list_manga)==0){
+		?>
+		<tr>
+			<td>No Anime Found!</td>
+		</tr>
+		<?php
+		}else{
 			foreach ($list_manga as $k => $v) {
 		?>
 		<tr>
@@ -17,6 +24,7 @@ $list_episode = list_episode_page("https://www.oploverz.in/series/one-piece/");
 		</tr>
 		<?php
 			}
+		}
 		?>
 		
 	</tbody>
@@ -26,6 +34,13 @@ $list_episode = list_episode_page("https://www.oploverz.in/series/one-piece/");
 <table class="table table-list">
 	<tbody>
 		<?php
+		if(sizeof($list_episode)==0){
+		?>
+		<tr>
+			<td>No Anime Found!</td>
+		</tr>
+		<?php
+		}else{
 			foreach ($list_episode as $k => $v) {
 		?>
 		<tr>
@@ -35,6 +50,7 @@ $list_episode = list_episode_page("https://www.oploverz.in/series/one-piece/");
 		</tr>
 		<?php
 			}
+		}
 		?>
 		
 	</tbody>

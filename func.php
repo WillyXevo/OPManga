@@ -281,10 +281,24 @@ function list_episode($url){
 function list_episode_page($url){
 	$ch = curl_init();
 	curl_setopt($ch,CURLOPT_URL,$url);
-	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	//curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36");
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER,
+    array(
+        "Upgrade-Insecure-Requests: 1",
+        //"User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36",
+        "User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
+        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+        "Accept-Language: en-US,en;q=0.9",
+        "cookie: __cfduid=da5a43c33c765d8c5ecc8757d17acbaa21573400863; cf_clearance=dbdc95a38f52919ba3c14d5e8473195aa022b0e3-1573400868-0-150; _ga=GA1.2.1782458.1573400868; _gid=GA1.2.1987219291.1573400868; HstCfa4135177=1573400875080; HstCmu4135177=1573400875080; HstCnv4135177=1; HstCns4135177=1; __dtsu=1EE704453831C85D33301B0402D15797; __atuvc=3%7C46; __atuvs=5dc8312478a5a8d9002; HstCla4135177=1573401070454; HstPn4135177=3; HstPt4135177=3"
+    ));
 
 	$data = curl_exec($ch);
 	$info = curl_getinfo($ch);
@@ -296,10 +310,12 @@ function list_episode_page($url){
 	//$html = file_get_html($url);
 	$html = $dom->load($data, true, true);
 	$list_episode = array();
-
+	//echo $html;
+	//echo htmlentities($html);
 	foreach ($html->find(".episodelist") as $div) {
 		$i=0;
 		foreach ($div->find("li") as $li) {
+
 			$eps = $li->find(".leftoff",0);
 			$judul = $li->find(".lefttitle",0);
 			$dt = $li->find(".rightoff",0);
@@ -309,6 +325,7 @@ function list_episode_page($url){
 											'judul'	=> $judul->plaintext,
 											'date'	=> $dt->plaintext
 											));
+
 			if($i==10){
 				return $list_episode;
 			}
@@ -317,6 +334,9 @@ function list_episode_page($url){
 	}
 }
 
+/*$list_episode = list_episode_page("https://www.oploverz.in/series/one-piece/");
+echo "ANIME <br>";
+print_r($list_episode);*/
 
 function list_anime($url){
 	$ch = curl_init();
