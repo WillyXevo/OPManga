@@ -2,7 +2,7 @@
 
 
 //$list_manga = list_chapter("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
-$list_manga = list_chapter("https://mangaku.in/baca-komik-one-piece-bahasa-indonesia");
+$list_manga = list_chapter("https://mangaku.in/komik/one-piece/");
 
 
 $per_page = 10;

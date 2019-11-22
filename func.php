@@ -160,13 +160,14 @@ function list_manga($url='')
 	}
 	return $list_manga2;
 }
-/*
-$lm = list_manga('https://mangaku.in/one-piece-chapter-954-seperti-memberikan-sayap-pada-naga/');
+
+//$lm = [];
+/*$lm = list_manga("https://mangaku.in/komik/one-piece/");
 
 echo '<pre>';
 print_r($lm);
-echo '</pre>';*/
-
+echo '</pre>';
+*/
 function e_url( $s ) {
 	return rtrim(strtr(base64_encode($s), '+/', '-_'), '='); 
 }
@@ -189,12 +190,19 @@ function list_chapter($url){
 
 	curl_close($ch);
 
+	/*return array(
+					'data' => htmlentities($data),
+					'info' => $info,
+					'error' => $error,
+				);*/
+
 	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
 
 	$html = $dom->load($data, true, true);
 
 	$list_manga = array();
-	foreach ($html->find("div>small") as $div) {
+	foreach ($html->find("#content-b") as $div) {
+		
 		$i = 0;
 		foreach ($div->find('a') as $a) {
 			$list_manga[$i] = array('judul' => $a->plaintext,
@@ -205,6 +213,13 @@ function list_chapter($url){
 	}
 	return $list_manga;
 }
+
+//$lm = [];
+/*$lm = list_chapter("https://mangaku.in/komik/one-piece/");
+
+echo '<pre>';
+print_r($lm);
+echo '</pre>';*/
 
 
 function list_chapter_page($url){
@@ -226,7 +241,7 @@ function list_chapter_page($url){
 	$html = $dom->load($data, true, true);
 
 	$list_manga = array();
-	foreach ($html->find("div>small") as $div) {
+	foreach ($html->find("#content-b") as $div) {
 		$i = 0;
 		foreach ($div->find('a') as $a) {
 			$list_manga[$i] = array('judul' => $a->plaintext,

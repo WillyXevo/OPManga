@@ -1,6 +1,6 @@
 <?php
 
-$list_manga = list_chapter_page("https://mangaku.in/baca-komik-one-piece-bahasa-indonesia");
+$list_manga = list_chapter_page("https://mangaku.in/komik/one-piece/");
 $list_episode = list_episode_page("https://www.oploverz.in/series/one-piece/");
 ?>
 
@@ -11,7 +11,7 @@ $list_episode = list_episode_page("https://www.oploverz.in/series/one-piece/");
 		if(sizeof($list_manga)==0){
 		?>
 		<tr>
-			<td>No Anime Found!</td>
+			<td>No Manga Found!</td>
 		</tr>
 		<?php
 		}else{
