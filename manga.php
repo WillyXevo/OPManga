@@ -1,8 +1,8 @@
 <?php
 
 
-//$list_manga = list_chapter("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
-$list_manga = list_chapter("https://mangaku.in/komik/one-piece/");
+$list_manga = list_chapter("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+//$list_manga = list_chapter("https://mangaku.in/komik/one-piece/");
 
 
 $per_page = 10;
@@ -46,7 +46,7 @@ echo '</pre>';*/
 		<tr>
 			<td><a href="index.php?page=view&judul=<?= e_url($v['judul']);?>&link=<?= e_url($v['link']);?>"><?= trim($v['judul']);?></a></td>
 			
-			<td><?= '';//$v['date']?></td>
+			<td><?= $v['date']?></td>
 		</tr>
 		<?php
 			}

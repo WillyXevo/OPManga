@@ -1,54 +1,15 @@
 <?php
 
 require('simplehtmldom/simple_html_dom.php');
-/*
-function list_chapter($url='')
-{
-	$ch = curl_init();
-	curl_setopt($ch,CURLOPT_URL,$url);
-	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-	curl_setopt($ch, CURLOPT_PROXY, null);
-
-	$data = curl_exec($ch);
-	$info = curl_getinfo($ch);
-	$error = curl_error($ch);
-
-	curl_close($ch);
-	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
-
-	//$content = 
-	//$html = $dom->load($content, true, true);
-	//$html = $dom->load_file($url);//$dom->load($content, true, true);
-
-	$html = $dom->load($data, true, true);
-	//$html = file_get_html($url);
-	$list_manga = array();
-	$jd = "";
-	foreach($html->find('tr.c3') as $ell){
-		$i=1;
-		$tmp = [];
-		
-		foreach ($ell->find('td') as $td) {
-			if($i==2){
-				$sp = explode(" ", $td->plaintext);
-				$txt = $sp[5];
-				$nt = $txt+1;
-				$a = "http://www.mangacanblog.com/baca-komik-one_piece-$txt-$nt-bahasa-indonesia-one_piece-$txt-terbaru.html";
-				$tmp["link"] = $a;
-				$tmp["judul"] = $td->plaintext;
-			}
-			if($i==3){
-				$tmp['date'] = $td->plaintext;
-			}
-			$i++;
-		}
-		array_push($list_manga, $tmp);
-	}
-	return $list_manga;
+function e_url( $s ) {
+	return rtrim(strtr(base64_encode($s), '+/', '-_'), '='); 
 }
-*/
+ 
+function d_url($s) {
+	return base64_decode(str_pad(strtr($s, '-_', '+/'), strlen($s) % 4, '=', STR_PAD_RIGHT));
+}
+
 
 function _filter_($arr){
 	$ret = [];
@@ -83,9 +44,127 @@ function _filter2($arr){
 	return $ret;
 }
 
+/*
+*
+*
+*
+* //////////////////////////// MANGA AREA ///////////////////////////////////////
+*
+*
+*
+*
+*/
 
-//require('simplehtmldom/simple_html_dom.php');
-/*function list_manga($url='')
+
+/*
+*
+*
+*
+* //////////////////////////// MANGACANBLOG AREA ///////////////////////////////////////
+*
+*
+*
+*
+*/
+
+
+function list_chapter($url='')
+{
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$error = curl_error($ch);
+
+	curl_close($ch);
+	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+	$html = $dom->load($data, true, true);
+	$list_manga = array();
+	$jd = "";
+	foreach($html->find('tr.c3') as $ell){
+		$i=1;
+		$tmp = [];
+		
+		foreach ($ell->find('td') as $td) {
+			if($i==2){
+				$sp = explode(" ", $td->plaintext);
+				$txt = $sp[5];
+				$nt = $txt+1;
+				$a = "http://www.mangacanblog.com/baca-komik-one_piece-$txt-$nt-bahasa-indonesia-one_piece-$txt-terbaru.html";
+				$tmp["link"] = $a;
+				$tmp["judul"] = trim($td->plaintext);
+			}
+			if($i==3){
+				$tmp['date'] = $td->plaintext;
+			}
+			$i++;
+		}
+		array_push($list_manga, $tmp);
+	}
+	return $list_manga;
+}
+
+/*$lst = list_chapter("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+echo '<pre>';
+print_r($lst);
+echo '</pre>';*/
+
+function list_chapter_page($url='')
+{
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$error = curl_error($ch);
+
+	curl_close($ch);
+	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+	$html = $dom->load($data, true, true);
+	$list_manga = array();
+	$jd = "";
+	$pp = 0;
+	foreach($html->find('tr.c3') as $ell){
+		$i=1;
+		$tmp = [];
+		
+		foreach ($ell->find('td') as $td) {
+			if($i==2){
+				$sp = explode(" ", $td->plaintext);
+				$txt = $sp[5];
+				$nt = $txt+1;
+				$a = "http://www.mangacanblog.com/baca-komik-one_piece-$txt-$nt-bahasa-indonesia-one_piece-$txt-terbaru.html";
+				$tmp["link"] = $a;
+				$tmp["judul"] = trim($td->plaintext);
+			}
+			if($i==3){
+				$tmp['date'] = $td->plaintext;
+			}
+			$i++;
+		}
+		array_push($list_manga, $tmp);
+		if($pp==10){
+			return $list_manga;
+		}
+		$pp++;
+	}
+	return $list_manga;
+}
+
+
+
+function list_manga($url='')
 {
 	$ch = curl_init();
 	curl_setopt($ch,CURLOPT_URL,$url);
@@ -110,19 +189,50 @@ function _filter2($arr){
 		foreach($ell->find('div#manga') as $mg){
 			foreach($mg->find('img') as $s){
 				//array_push($list_manga, $s->src);
-				$a = $s->src;
-				if(strpos($a, '.com') !== false){
-					array_push($list_manga, $s->src);
+				$a = file_get_contents($s->src);
+				/*$im = imagecreatefromjpeg($a);
+				$size = min(imagesx($im), imagesy($im)); 
+				$im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => 250, 'height' => 150]);
+				$img = imagepng($im2);*/
+				$src =  base64_encode($a); 
+				//echo '<img src="data:image/jpg;base64,'.$src.'">';
+				array_push($list_manga, $src);
+    			//imagedestroy($im2); 
+				//return [];
+				/*if(strpos($a, '.com') !== false){
+					$a = base64_encode(file_get_contents($s->src));
 				}else{
-					array_push($list_manga, "http://www.mangacanblog.com/".$s->src);
-				}
+					$a = base64_encode(file_get_contents($s->src));
+					array_push($list_manga, "http://www.mangacanblog.com/".$a);
+				}*/
 			}
 		}
 	}
-	return $list_manga;
-}*/
 
-function list_manga($url='')
+	$list_manga = _filter_($list_manga);
+
+	return $list_manga;
+}
+
+/*$lst = list_manga("http://www.mangacanblog.com/baca-komik-one_piece-963-964-bahasa-indonesia-one_piece-963-terbaru.html");
+echo '<pre>';
+print_r($lst);
+echo '</pre>';*/
+
+
+/*
+*
+*
+*
+* //////////////////////////// MANGAKU.IN AREA ///////////////////////////////////////
+*
+*
+*
+*
+*/
+
+
+/*function list_manga($url='')
 {
 	$ch = curl_init();
 	curl_setopt($ch,CURLOPT_URL,$url);
@@ -143,37 +253,24 @@ function list_manga($url='')
 	$list_manga = array();
 	$jd = "";
 
-	foreach($html->find('.entry') as $div){
+		echo $html;
+	foreach($html->find('.FwsLJGSYKCsCm') as $div){
+		
 		foreach($div->find('.separator>a>img') as $ell){
-			/*
+			//echo $ell->src.'<br>';
+			
 			$src = base64_encode(file_get_contents($ell->src));
 			echo '<img src="data:image/jpg;base64,'.$src.'">';
-			echo '<br>'.$ell->src.'<br>';*/
+			echo '<br>'.$ell->src.'<br>';
 			array_push($list_manga, $ell->src);
 		}
 	}
 	$fil =  _filter2($list_manga);
-	//print_r($fil);
 	$list_manga2 = array();
 	foreach ($fil as $k => $v) {
 		array_push($list_manga2, base64_encode(file_get_contents($v)));
 	}
 	return $list_manga2;
-}
-
-//$lm = [];
-/*$lm = list_manga("https://mangaku.in/komik/one-piece/");
-
-echo '<pre>';
-print_r($lm);
-echo '</pre>';
-*/
-function e_url( $s ) {
-	return rtrim(strtr(base64_encode($s), '+/', '-_'), '='); 
-}
- 
-function d_url($s) {
-	return base64_decode(str_pad(strtr($s, '-_', '+/'), strlen($s) % 4, '=', STR_PAD_RIGHT));
 }
 
 function list_chapter($url){
@@ -189,12 +286,6 @@ function list_chapter($url){
 	$error = curl_error($ch);
 
 	curl_close($ch);
-
-	/*return array(
-					'data' => htmlentities($data),
-					'info' => $info,
-					'error' => $error,
-				);*/
 
 	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
 
@@ -213,13 +304,6 @@ function list_chapter($url){
 	}
 	return $list_manga;
 }
-
-//$lm = [];
-/*$lm = list_chapter("https://mangaku.in/komik/one-piece/");
-
-echo '<pre>';
-print_r($lm);
-echo '</pre>';*/
 
 
 function list_chapter_page($url){
@@ -255,7 +339,19 @@ function list_chapter_page($url){
 		}
 	}
 	
-}
+}*/
+
+
+/*
+*
+*
+*
+* //////////////////////////// ANIME AREA ///////////////////////////////////////
+*
+*
+*
+*
+*/
 
 function list_episode($url){
 	$ch = curl_init();
