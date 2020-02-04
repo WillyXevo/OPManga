@@ -13,8 +13,8 @@
 		foreach ($list_manga as $k => $v) {
 	?>
 	<figure class="img_fig" id="<?= $k; ?>">
-		<!-- <img src="<?= '';//$v; ?>" alt="<?= '';//$k; ?>" class="img-responsive"> -->
-		 <img src="data:image/jpg;base64,<?= $v; ?>" alt="<?= $k; ?>" class="img-responsive"> 
+		<img src="<?= $v; ?>" alt="<?= $k; ?>" class="img-responsive">
+		<!-- <img src="data:image/jpg;base64,<?= '';//$v; ?>" alt="<?= '';//$k; ?>" class="img-responsive">  --> 
 	</figure>
 	<?php
 		}

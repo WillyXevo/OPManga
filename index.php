@@ -17,7 +17,7 @@ if(isset($_GET['page'])){
 		if(isset($_GET['judul']) &&  isset($_GET['link'])){
 			$judul = d_url($_GET['judul']);
 			$link = d_url($_GET['link']);
-
+			//echo $link;
 			$judul = trim($judul);
 			//$link = $_GET['link'];
 			$list_manga = list_manga($link);

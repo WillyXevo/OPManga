@@ -110,6 +110,7 @@ function list_chapter($url='')
 	return $list_manga;
 }
 
+
 /*$lst = list_chapter("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
 echo '<pre>';
 print_r($lst);
@@ -181,45 +182,45 @@ function list_manga($url='')
 	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
 
 	//$html = file_get_html($url);
-
-	$html = $dom->load($data, true, true);
+	
 	$list_manga = array();
+	
+	$html = $dom->load($data, true, true);
 	$jd = "";
 	foreach($html->find('div#imgholder') as $ell){
 		foreach($ell->find('div#manga') as $mg){
+			$i=0;
 			foreach($mg->find('img') as $s){
-				//array_push($list_manga, $s->src);
-				$a = file_get_contents($s->src);
-				/*$im = imagecreatefromjpeg($a);
-				$size = min(imagesx($im), imagesy($im)); 
-				$im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => 250, 'height' => 150]);
-				$img = imagepng($im2);*/
-				$src =  base64_encode($a); 
-				//echo '<img src="data:image/jpg;base64,'.$src.'">';
+				//echo "$s->src <br>";
+				$src =  $s->src; 
+				
+				/*$a = file_get_contents($s->src);
+				$src =  base64_encode($a); */
 				array_push($list_manga, $src);
-    			//imagedestroy($im2); 
-				//return [];
-				/*if(strpos($a, '.com') !== false){
-					$a = base64_encode(file_get_contents($s->src));
-				}else{
-					$a = base64_encode(file_get_contents($s->src));
-					array_push($list_manga, "http://www.mangacanblog.com/".$a);
-				}*/
+				$i++;
+				if($i==2){return $list_manga;}
 			}
 		}
 	}
 
-	$list_manga = _filter_($list_manga);
-
+	//$list_manga = $list_manga;
+	//$list_manga = _filter_($list_manga);
 	return $list_manga;
+	
 }
 
-/*$lst = list_manga("http://www.mangacanblog.com/baca-komik-one_piece-963-964-bahasa-indonesia-one_piece-963-terbaru.html");
+//$lst = list_manga("http://www.mangacanblog.com/baca-komik-one_piece-968.5-969.5-bahasa-indonesia-one_piece-968.5-terbaru.html");
+//$lst = list_manga("https://www.mangacanblog.com/baca-komik-one_piece-968.5-969.5-bahasa-indonesia-one_piece-968.5-terbaru.html");
+/*$lst = list_manga("https://mangacanblog.com/baca-komik-one_piece-968-969-bahasa-indonesia-one_piece-968-terbaru.html");
 echo '<pre>';
+echo "HAHA";
 print_r($lst);
-echo '</pre>';*/
-
-
+*///$a = file_get_contents("https://3.bp.blogspot.com/-viD8muvI7HI/XiJphQCtC-I/AAAAAAAAF1A/wPFJz3ddlQsVTnCt6B2gH-y-TIOmUtVOwCLcBGAsYHQ/s1600/16_dvS3WJS.jpg");
+//echo $a; 
+/*
+$src = base64_encode($a);
+echo $src;*/
+//echo '</pre>';
 /*
 *
 *
@@ -472,8 +473,14 @@ function list_anime($url){
 	}
 	
 	foreach ($html->find('.epsc') as $epsc) {
-		$mkv_text = $epsc->find('h2',0)->plaintext;
-		$mp4_text = $epsc->find('h2',1)->plaintext;
+		$mkv_text = '';//$epsc->find('h2',0)->plaintext;
+		$mp4_text = '';//$epsc->find('h2',1)->plaintext;
+		if($epsc->find('h2',0)){
+			$mkv_text = $epsc->find('h2',0)->plaintext;
+		}
+		if($epsc->find('h2',1)){
+			$mp4_text = $epsc->find('h2',1)->plaintext;
+		}
 		
 		$mkv_array = array();
 		$mp4_array = array();
@@ -498,20 +505,22 @@ function list_anime($url){
 			$i++;
 		}
 		$i = 0;
-		foreach ($mp4_box->find(".title-download") as $td) {
-			$mp4_array[$i]['text'] = $td->plaintext;
-			$i++;
-		}
-		$i = 0;
-		foreach ($mp4_box->find(".list-download") as $ld) {
-			$j=0;
-			foreach ($ld->find('strong') as $strong) {
-				foreach ($strong->find('a') as $link) {
-					$mp4_array[$i]['server'][$j] = array('text' => $link->plaintext, 'link' => $link->href);
-					$j++;
-				}
+		if($mp4_box){
+			foreach ($mp4_box->find(".title-download") as $td) {
+				$mp4_array[$i]['text'] = $td->plaintext;
+				$i++;
 			}
-			$i++;
+			$i = 0;
+			foreach ($mp4_box->find(".list-download") as $ld) {
+				$j=0;
+				foreach ($ld->find('strong') as $strong) {
+					foreach ($strong->find('a') as $link) {
+						$mp4_array[$i]['server'][$j] = array('text' => $link->plaintext, 'link' => $link->href);
+						$j++;
+					}
+				}
+				$i++;
+			}
 		}
 
 		$list_anime['download'] = array(
