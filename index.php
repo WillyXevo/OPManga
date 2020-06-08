@@ -97,6 +97,7 @@ if(isset($_GET['page'])){
 				        <li id="link-menu-home"><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
 				        <li id="link-menu-manga"><a href="index.php?page=manga">Manga <span class="sr-only">(current)</span></a></li>
 				        <li id="link-menu-anime"><a href="index.php?page=anime">Anime <span class="sr-only">(current)</span></a></li>
+				        <li id="link-menu-anime2"><a href="index.php?page=anime2">Anime 2 <span class="sr-only">(current)</span></a></li>
 			      	</ul>
 		      	</div>
 	    	</div><!-- /.navbar-collapse -->
