@@ -30,18 +30,24 @@
 	}
 
 	function gen_name(id) {
-		var seb = id--;
-		var nex = id++;
+		var id = parseInt(id);
+		var seb = id-1;
+		var nex = id+1;
 		var ret = '<div class="row">';
-		ret += '<div class="col-xs-4">';
-			ret += '<a href="index.php?page=view_anime2&id='+nex+'" class="btn btn-success btn-nav-bottom">Episode Berikutnya</a>';
-		ret += '</div>';
-		ret += '<div class="col-xs-4">';
-			ret += '<a href="index.php?p=anime2" class="btn btn-warning btn-nav-bottom">List Episode</a>';
-		ret += '</div>';
-		ret += '<div class="col-xs-4">';
-			ret += '<a href="index.php?page=view_anime2&id='+seb+'" class="btn btn-success btn-nav-bottom">Episode Sebelumnya</a>';
-		ret += '</div>';
+		var dis = "";
+			if(seb<0){
+				dis = "disabled";
+			}
+			ret += '<div class="col-xs-4">';
+				ret += '<a href="index.php?page=view_anime2&id='+seb+'" class="btn btn-success btn-nav-bottom '+dis+'">Episode Sebelumnya</a>';
+			ret += '</div>';
+
+			ret += '<div class="col-xs-4">';
+				ret += '<a href="index.php?p=anime2" class="btn btn-warning btn-nav-bottom">List Episode</a>';
+			ret += '</div>';
+			ret += '<div class="col-xs-4">';
+				ret += '<a href="index.php?page=view_anime2&id='+nex+'" class="btn btn-success btn-nav-bottom">Episode Berikutnya</a>';
+			ret += '</div>';
 		ret += '</div>';
 		$(".nav_bottom").html(ret);
 	}
