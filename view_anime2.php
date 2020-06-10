@@ -1,69 +1,77 @@
-<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
-<script src="fbase.js"></script>
+
 <style>
+	.nav_bottom{
+		padding: 0;
+	}
+	.nav_bottom>.col-xs-4{
+		padding: 0;
+	}
 	.btn-nav-bottom{
 		width: 100%;
+		padding: 10px 0;
+	}
+
+	.btn-seb{
+		border-radius: 4px 0px 0px 4px;
+		-moz-border-radius: 4px 0px 0px 4px;
+		-webkit-border-radius: 4px 0px 0px 4px;
+	}
+	.btn-lis{
+		border-radius:0;
+	}
+	.btn-nex{
+		border-radius: 0px 4px 4px 0px;
+		-moz-border-radius: 0px 4px 4px 0px;
+		-webkit-border-radius: 0px 4px 4px 0px;
+	}
+	@media (min-width: 320px) and (max-width: 480px) {
+		.btn-nav-bottom{
+			font-size: 0.8em;
+		}
 	}
 </style>
-<script type="text/javascript">
-	var ddb;
+<?php if(isset($_GET['id'])): 
 
-	ddb = firebase.database().ref();
+	$id = (int)$_GET['id'];
+	$data_anime = json_decode(file_get_contents("anime.json"), true);
+	$data_anime = array_reverse($data_anime);
+	$data = $data_anime[$id];
+	//print_r($data);
+	//echo '$("#judul").html("'.$data['judul'].'");';
+	$seb = (int)$id-1;
+	$nex = (int)$id+1;
+	$dis = ($seb<0)?'disabled':'';
 
-	var data = ddb.child("tanime");
-
-	<?php if(isset($_GET['id'])): ?>
-	data.orderByKey().equalTo("<?= $_GET['id']; ?>").on("child_added", function(data) {
-	    console.log(data);
-	    console.log("Equal to filter: " + data.val().judul);
-	    $("#judul").html(data.val().judul);
-	    console.log(data.val().video);
-	    gen_video(data.val().video);
-	    gen_name(<?= $_GET['id']; ?>);
-	});
-
-	function gen_video(data){
-		var ret = '<iframe style="width:100%; height:500px;" src="'+data+'" allowfullscreen="true" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" class="idframe" __idm_frm__="1931"></iframe>';
-		$("#video").html(ret);
+	$judul = trim($data['judul']);
+	if(strlen($judul) < 8){
+		$judul = trim($data['eps']);
+	}else{
+		$judul = trim($data['eps']).", ".trim($data['judul']);
 	}
-
-	function gen_name(id) {
-		var id = parseInt(id);
-		var seb = id-1;
-		var nex = id+1;
-		var ret = '<div class="row">';
-		var dis = "";
-			if(seb<0){
-				dis = "disabled";
-			}
-			ret += '<div class="col-xs-4">';
-				ret += '<a href="index.php?page=view_anime2&id='+seb+'" class="btn btn-success btn-nav-bottom '+dis+'">Episode Sebelumnya</a>';
-			ret += '</div>';
-
-			ret += '<div class="col-xs-4">';
-				ret += '<a href="index.php?p=anime2" class="btn btn-warning btn-nav-bottom">List Episode</a>';
-			ret += '</div>';
-			ret += '<div class="col-xs-4">';
-				ret += '<a href="index.php?page=view_anime2&id='+nex+'" class="btn btn-success btn-nav-bottom">Episode Berikutnya</a>';
-			ret += '</div>';
-		ret += '</div>';
-		$(".nav_bottom").html(ret);
-	}
-
-	<?php endif; ?>
-</script>
-<h2 id="judul"></h2>
+?>
+<h2><?= $judul; ?></h2>
 <br><br>
+<iframe style="width:100%; height:500px;" src="<?= $data['video']; ?>" allowfullscreen="true" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" class="idframe" __idm_frm__="1931"></iframe>
 <div id="video"></div>
 <br><br>
 <div class="container nav_bottom">
-	
+	<div class="col-xs-4">
+		<a href="index.php?page=view_anime2&id=<?= $seb; ?>" class="btn btn-success btn-nav-bottom btn-seb <?= $dis; ?>">	
+			Episode Sebelumnya
+		</a>
+	</div>
+
+	<div class="col-xs-4">
+		<a href="index.php?p=anime2" class="btn btn-warning btn-nav-bottom btn-lis">List Episode</a>
+	</div>
+	<div class="col-xs-4">
+		<a href="index.php?page=view_anime2&id=<?= $nex; ?>" class="btn btn-success btn-nav-bottom btn-nex">
+			Episode Berikutnya
+		</a>
+	</div>
 </div>
 <br><br>
-
-<a href="index.php"><h4 class="link_back">&#60;&#60; Kembali</h4></a>
+<?php endif; ?>
 
 
 <!-- 

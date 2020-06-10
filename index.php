@@ -158,6 +158,8 @@ if(isset($_GET['page'])){
 				$lk = 'manga';
 			}else if($lk == 'view_anime'){
 				$lk = 'anime';
+			}else if($lk == 'view_anime2'){
+				$lk = 'anime2';
 			}
 			echo '<script type="text/javascript">';
 			echo '$(document).ready(function(){';

@@ -35,6 +35,7 @@ echo '</pre>';*/
 ?>
 
 <h2>LIST ANIME ONE PIECE INDONESIA</h2>
+
 <table class="table table-list">
 	<tbody>
 		<?php
