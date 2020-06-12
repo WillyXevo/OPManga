@@ -43,8 +43,11 @@ if(isset($_GET['page'])){
 			$og_desc = 'Read one piece manga online. '.$judul; 
 			$og_img = "https://www.oploverz.in/wp-content/uploads/2015/09/Screenshot_1.jpg";
 		}
-	}
 
+		if($p == "view_anime2"){
+
+		}
+	}
 	
 }
 

@@ -6,7 +6,6 @@
 </style>
 <?php
 	$data_anime = json_decode(file_get_contents("anime.json"), true);
-	$data_anime = array_reverse($data_anime);
 ?>
 <h2>LIST ANIME ONE PIECE INDONESIA</h2>
 <hr>
@@ -14,15 +13,16 @@
 	<thead>
 		<tr>
 			<th width="1%">No</th>
-			<th>Episode</th>
-			<th width="50%">Judul</th>
-			<th>Tanggal</th>
+			<th width="10%">Episode</th>
+			<th width="79%">Judul</th>
+			<th width="10%">Tanggal</th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php
 		$i = 0;
 		foreach ($data_anime as $k => $v):
+			
 	?>
 		<tr id="<?= $k; ?>">
 			<td><?= ++$i; ?></td>		

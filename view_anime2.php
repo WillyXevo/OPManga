@@ -34,10 +34,9 @@
 
 	$id = (int)$_GET['id'];
 	$data_anime = json_decode(file_get_contents("anime.json"), true);
-	$data_anime = array_reverse($data_anime);
+	//$data_anime = array_reverse($data_anime);
 	$data = $data_anime[$id];
-	//print_r($data);
-	//echo '$("#judul").html("'.$data['judul'].'");';
+
 	$seb = (int)$id-1;
 	$nex = (int)$id+1;
 	$dis = ($seb<0)?'disabled':'';
