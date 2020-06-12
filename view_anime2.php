@@ -39,7 +39,14 @@
 
 	$seb = (int)$id-1;
 	$nex = (int)$id+1;
-	$dis = ($seb<0)?'disabled':'';
+	if(!isset($data_anime[$nex])){
+		$nex++;
+	}
+	if(!isset($data_anime[$nex])){
+		$nex=0;
+	}
+	$dis = ($seb<=0)?'disabled':'';
+	$disn = ($nex==0)?'disabled':'';
 
 	$judul = trim($data['judul']);
 	if(strlen($judul) < 8){
@@ -64,7 +71,7 @@
 		<a href="index.php?p=anime2" class="btn btn-warning btn-nav-bottom btn-lis">List Episode</a>
 	</div>
 	<div class="col-xs-4">
-		<a href="index.php?page=view_anime2&id=<?= $nex; ?>" class="btn btn-success btn-nav-bottom btn-nex">
+		<a href="index.php?page=view_anime2&id=<?= $nex; ?>" class="btn btn-success btn-nav-bottom btn-nex <?= $disn; ?>">
 			Episode Berikutnya
 		</a>
 	</div>
