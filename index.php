@@ -73,13 +73,14 @@ if(isset($_GET['page'])){
 	<link rel="shortcut icon" href="assets/img/icons.png" type="image/x-icon"/>
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/font-awesome.css">
+	<link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	
     <script src="assets/js/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container header-main">
-		<h1><span class="color-yellow">O</span>PMANGA</h1>
+		<a href="index.php"><h1><span class="color-yellow">O</span>PMANGA</h1></a>
 	</div>
 	<nav class="navbar navbar-inverse navbar-main">
   		<div class="container-fluid">
@@ -97,10 +98,7 @@ if(isset($_GET['page'])){
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      	<div class="container">
 			      	<ul class="nav navbar-nav">
-				        <li id="link-menu-home"><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
-				        <li id="link-menu-manga"><a href="index.php?page=manga">Manga <span class="sr-only">(current)</span></a></li>
-				        <li id="link-menu-anime"><a href="index.php?page=anime">Anime <span class="sr-only">(current)</span></a></li>
-				        <li id="link-menu-anime2"><a href="index.php?page=anime2">Anime 2 <span class="sr-only">(current)</span></a></li>
+				        <li id="link-menu-home" class="active"><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
 			      	</ul>
 		      	</div>
 	    	</div><!-- /.navbar-collapse -->
@@ -116,11 +114,11 @@ if(isset($_GET['page'])){
 			$p = $q.".php";
 			if(in_array($p, $file)){
 				include $p;
-				link_active($q);
+			}else{
+				include "404.php";
 			}
 		}else{
 			include "home.php";
-			link_active('home');
 		}
 	?>
 	</div>
@@ -155,21 +153,14 @@ if(isset($_GET['page'])){
 		</div>
 	</div>
 	<script src="assets/js/bootstrap.min.js"></script>
-	<?php
-		function link_active($lk){
-			if($lk =='view'){
-				$lk = 'manga';
-			}else if($lk == 'view_anime'){
-				$lk = 'anime';
-			}else if($lk == 'view_anime2'){
-				$lk = 'anime2';
-			}
-			echo '<script type="text/javascript">';
-			echo '$(document).ready(function(){';
-			echo '$("#link-menu-'.$lk.'").addClass("active");';
-			echo '});';
-			echo '</script>';
-		}
-	?>
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/dataTables.bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".dataTable").DataTable( {
+			  	"ordering": false
+			});
+		});
+	</script>
 </body>
 </html>

@@ -11,7 +11,7 @@ body{
 	
 }
 
-.header-main>h1{
+.header-main>a>h1{
 	font-family: opfont;
 	font-size: 5em;
 	-webkit-text-stroke: 0.5px #3C9CCD;
@@ -126,4 +126,8 @@ a:hover{
     	height: 30px;
 		font-size: 1em;
  	}
+}
+
+.dataTable>thead{
+	display: none;
 }
