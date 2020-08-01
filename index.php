@@ -79,31 +79,12 @@ if(isset($_GET['page'])){
     <script src="assets/js/jquery.min.js"></script>
 </head>
 <body>
-	<div class="container header-main">
-		<a href="index.php"><h1><span class="color-yellow">O</span>PMANGA</h1></a>
+	<div class="header-main">
+		<div class="container">
+			<a href="index.php" class="main-title"><h1><span class="color-yellow">O</span>PMANGA</h1></a>
+		</div>
 	</div>
-	<nav class="navbar navbar-inverse navbar-main">
-  		<div class="container-fluid">
-	    	<!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-		     	 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-			        <span class="sr-only">Toggle navigation</span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-		      	</button>
-		    </div>
-
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      	<div class="container">
-			      	<ul class="nav navbar-nav">
-				        <li id="link-menu-home" class="active"><a href="index.php">Home <span class="sr-only">(current)</span></a></li>
-			      	</ul>
-		      	</div>
-	    	</div><!-- /.navbar-collapse -->
-	  	</div><!-- /.container-fluid -->
-	</nav>
+	
 	<div class="container body-main">
 	<?php
 
@@ -122,6 +103,11 @@ if(isset($_GET['page'])){
 		}
 	?>
 	</div>
+
+	<a href="#" class="scrollToTop" style="display: inline;">
+		<i class="fa fa-angle-up"></i>
+	</a>
+
 	<div class="footer">
 		<div class="container">
 			<div class="container">
@@ -153,12 +139,44 @@ if(isset($_GET['page'])){
 		</div>
 	</div>
 	<script src="assets/js/bootstrap.min.js"></script>
+
+    <script src="assets/js/jquery.easing.min.js"></script>
 	<script src="assets/js/jquery.dataTables.min.js"></script>
 	<script src="assets/js/dataTables.bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$(".dataTable").DataTable( {
-			  	"ordering": false
+			  	"ordering": false,
+			  	"lengthMenu": [ [100, -1], [100, "ALL"] ]
+			});
+
+			$(".scrollToTop").click(function(){
+				$('html, body').stop().animate({
+			      scrollTop: 0
+			    }, 1000, 'easeInOutExpo');
+				return false;
+			});
+			
+			/// scroll things
+			var scrollDistance = $(document).scrollTop();
+			var scrt = $(".scrollToTop").offset().top;
+			var bdh = $('body').height();
+			var foth = $(".footer").height();
+			
+			if(scrollDistance >= bdh-foth-600 ){
+				$(".scrollToTop").addClass("scrollToTopRel");
+			}else{
+				$(".scrollToTop").removeClass("scrollToTopRel");
+			}
+			$(document).on('scroll', function() {
+				scrollDistance = $(this).scrollTop();
+				bdh = $('body').height();
+				foth = $(".footer").height();
+				if(scrollDistance >= bdh-foth-600 ){
+					$(".scrollToTop").addClass("scrollToTopRel");
+				}else{
+					$(".scrollToTop").removeClass("scrollToTopRel");
+				}
 			});
 		});
 	</script>
