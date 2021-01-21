@@ -1,5 +1,6 @@
 <?php
-$list_manga = list_chapter("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+//$list_manga = list_chapter("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+$list_manga = list_chapter_kita("https://mangakita.net/manga/one-piece/");
 ?>
 
 <h2>LIST MANGA ONE PIECE INDONESIA</h2>

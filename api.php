@@ -65,6 +65,44 @@
 		return $list_manga;
 	}
 
+
+	
+	function list_op_kita($url='')
+	{
+		$ch = curl_init();
+		curl_setopt($ch,CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		curl_setopt($ch, CURLOPT_PROXY, null);
+
+		$data = curl_exec($ch);
+		$info = curl_getinfo($ch);
+		$error = curl_error($ch);
+
+		curl_close($ch);
+		$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+		$html = $dom->load($data, true, true);
+		$list_manga = array();
+		foreach($html->find('ul.clstyle') as $ell){
+			foreach($ell->find('li') as $li){
+				$j = $li->find("span.chapternum",0);
+				$d = $li->find("span.chapterdate",0);
+				$a = $li->find("a",0);
+				$list_manga[] = array(
+										"id" => md5(trim($j->plaintext)),
+										"judul" => $j->plaintext,
+										"date" => $d->plaintext,
+										"link" => $a->href,
+										"d_link" => "index.php?page=view&judul=".e_url(trim($j->plaintext))."&link=".e_url($a->href),
+										"date_act" => date("Y-m-d", strtotime($d->plaintext)),
+										);
+			}
+		}
+		return $list_manga;
+	}
+
 	function list_cb($url='')
 	{
 		$ch = curl_init();
@@ -164,12 +202,14 @@
 	}
 
 	if(!isset($_POST['judul'])){
-		$list_manga = list_op("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+		//$list_manga = list_op("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+		$list_manga = list_op_kita("https://mangakita.net/manga/one-piece/");
 		echo json_encode($list_manga, JSON_UNESCAPED_SLASHES);
 	}
 
 	if(isset($_GET['cb'])){
-		$list_manga = list_cb("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+		//$list_manga = list_cb("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+		$list_manga = list_op_kita("https://mangakita.net/manga/one-piece/");
 		echo json_encode($list_manga, JSON_UNESCAPED_SLASHES);
 	}
 

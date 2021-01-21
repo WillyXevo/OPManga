@@ -56,6 +56,7 @@ function _filter2($arr){
 */
 
 
+
 /*
 *
 *
@@ -111,7 +112,9 @@ function list_chapter($url='')
 }
 
 
-/*$lst = list_chapter("http://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
+
+
+/*$lst = list_chapter("https://www.mangacanblog.com/baca-komik-one_piece-bahasa-indonesia-online-terbaru.html");
 echo '<pre>';
 print_r($lst);
 echo '</pre>';*/
@@ -536,5 +539,93 @@ function list_anime($url){
 echo '<pre>';
 print_r($anime);
 echo '</pre>';*/
+
+/*
+*
+*
+*
+* //////////////////////////// MANGAKITA AREA ///////////////////////////////////////
+*
+*
+*
+*
+*/
+
+
+function list_chapter_kita($url='')
+{
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$error = curl_error($ch);
+
+	curl_close($ch);
+	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+	$html = $dom->load($data, true, true);
+	$list_manga = array();
+	foreach($html->find('ul.clstyle') as $ell){
+		foreach($ell->find('li') as $li){
+			$j = $li->find("span.chapternum",0);
+			$d = $li->find("span.chapterdate",0);
+			$a = $li->find("a",0);
+			$list_manga[] = array(
+									"judul" => $j->plaintext,
+									"date" => $d->plaintext,
+									"link" => $a->href,
+									);
+		}
+	}
+	return $list_manga;
+}
+
+function list_manga_kita($url='')
+{
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	curl_setopt($ch, CURLOPT_PROXY, null);
+
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$error = curl_error($ch);
+
+	curl_close($ch);
+	$dom = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+
+	
+	$list_manga = array();
+	
+	$html = $dom->load($data, true, true);
+
+	$regexp='/\<script>ts_reader\.run\((.*?)\)\;<\/script\>/s';
+    preg_match($regexp, $data, $matches);
+    if(isset($matches[1])){
+    	$manage = json_decode(str_replace(";", "", $matches[1]), true);
+    	$list_manga = $manage['sources'][0]['images'];
+    }
+	
+	return $list_manga;
+	
+}
+
+
+
+//$lst = list_chapter_kita("https://mangakita.net/manga/one-piece/");
+//$lst = list_manga_kita("https://mangakita.net/one-piece-chapter-1001-bahasa-indonesia/");
+//$lst = list_manga_kita("https://mangakita.net/one-piece-chapter-1001-bahasa-indonesia/");
+/*echo '<pre>';
+print_r($lst);
+echo '</pre>';
+*/
+
 
 ?>
