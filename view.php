@@ -31,7 +31,9 @@
 		$(".cb_chapter").html('<option value="">Select Chapter Manga</option>');
 		$.getJSON("api.php", function(response) {
 			$.each(response, function(index, element) {
-		        $(".cb_chapter").append('<option value="'+element.d_link+'">'+element.judul+'</option>');
+				var lk = "<?= d_url($_GET['link']); ?>";
+				var sel = lk==element.link?"selected":'';
+		        $(".cb_chapter").append('<option value="'+element.d_link+'" '+sel+'>'+element.judul+'</option>');
 		    });
 		});
 
