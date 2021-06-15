@@ -119,6 +119,11 @@ a:hover{
 	width: 100%;
 	padding-top: 5px;
 }
+.imgholder>img{
+	width: 100%;
+	min-height: 100px;
+	padding-bottom: 5px;
+}
 
 @media (min-width: 320px) and (max-width: 480px) {
  	.footer-left{
@@ -158,17 +163,17 @@ a:hover{
 }
 
 .btn-seb{
-	border-radius: 4px 0px 0px 4px;
 	-moz-border-radius: 4px 0px 0px 4px;
 	-webkit-border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0px 0px 4px;
 }
 .btn-lis{
 	border-radius:0;
 }
 .btn-nex{
-	border-radius: 0px 4px 4px 0px;
 	-moz-border-radius: 0px 4px 4px 0px;
 	-webkit-border-radius: 0px 4px 4px 0px;
+	border-radius: 0px 4px 4px 0px;
 }
 @media (min-width: 320px) and (max-width: 480px) {
 	.btn-nav-bottom{
@@ -257,4 +262,45 @@ body::-webkit-scrollbar-thumb {
 /* Handle on hover */
 body::-webkit-scrollbar-thumb:hover {
   	background: #555; 
+}
+
+.nav_bottom{
+	padding: 0;
+}
+.nav_bottom>.col-xs-4{
+	padding: 0;
+}
+.btn-nav-bottom{
+	width: 100%;
+	padding: 10px 0;
+}
+
+.btn-seb{
+	-moz-border-radius: 4px 0px 0px 4px;
+	-webkit-border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0px 0px 4px;
+}
+.btn-lis{
+	border-radius:0;
+}
+.btn-nex{
+	-moz-border-radius: 0px 4px 4px 0px;
+	-webkit-border-radius: 0px 4px 4px 0px;
+	border-radius: 0px 4px 4px 0px;
+}
+@media (min-width: 320px) and (max-width: 480px) {
+	.btn-nav-bottom{
+		font-size: 0.8em;
+	}
+}
+
+.btn-default2 {
+    color: #fff;
+    background-color: #222222;
+    border-color: #212121;
+}
+.btn-default2.focus, .btn-default2:focus, .btn-default2:hover{
+    color: #fff;
+    background-color: #333;
+    border-color: #222;
 }

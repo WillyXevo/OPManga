@@ -3,9 +3,6 @@
 
 require('func.php');
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: x-access-header, Authorization, Origin, X-Requested-With, Content-Type, Accept");
-
 $title = 'OPManga - Read one piece manga online.'; 
 $og_desc = 'Read one piece manga online.'; 
 $og_img = 'opmanga.herokuapp.com/assets/img/icons.png'; 
@@ -75,7 +72,7 @@ if(isset($_GET['page'])){
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/font-awesome.css">
 	<link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/style.css?t=<?= time(); ?>">
 	
     <script src="assets/js/jquery.min.js"></script>
 </head>
@@ -105,7 +102,7 @@ if(isset($_GET['page'])){
 	?>
 	</div>
 
-	<a href="#" class="scrollToTop" style="display: inline;">
+	<a href="#" class="scrollToTop" style="display: inline;" title="GoUP">
 		<i class="fa fa-angle-up"></i>
 	</a>
 
@@ -146,11 +143,7 @@ if(isset($_GET['page'])){
 	<script src="assets/js/dataTables.bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$(".dataTable").DataTable( {
-			  	"ordering": false,
-			  	"lengthMenu": [ [100, -1], [100, "ALL"] ]
-			});
-
+			
 			$(".scrollToTop").click(function(){
 				$('html, body').stop().animate({
 			      scrollTop: 0
