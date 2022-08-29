@@ -56,6 +56,7 @@ body{
 .table-list>thead>tr>th {
     border-top: none;
     border-bottom: 1px solid #DDD;
+    width:40vh;
 }
 
 .footer{

@@ -1,7 +1,7 @@
 
 <?php
 
-require('func.php');
+require_once('func.php');
 
 $title = 'OPManga - Read one piece manga online.'; 
 $og_desc = 'Read one piece manga online.'; 
